@@ -1,0 +1,173 @@
+# <center>2646-Day3-Tang Peiyao<center>
+
+# Python
+
+### numpy
+
+- 数组的定义
+  - array
+  - ()和[] arrange
+  - range(a,b) 其实是a,a+1,...,**b-1**
+- 运算：加减<u>乘</u>除
+  - * 仅每个对应元素相乘，不是矩阵乘积
+  - 函数sin,cos, sqrt, reshape
+  - ones
+- 矩阵乘积：dot() 点乘
+- 元素自加减： += -=
+- 数组变形：
+  - 新矩阵名=原矩阵名.reshape(a,b) //老矩阵不变
+  - a.shape(a,b) //把原矩阵编程变化
+  - a.ravel() 把多维数组转化为一维数组 等价于a.shape
+  - a.transpose 转置
+- 矩阵操作
+  - np.matmul 矩阵相乘
+  - np.zeros 创建零矩阵
+  - np.arange 定义范围 （开始，停止，步长）
+  - np.identity 创建单位阵
+  - np.vstack 垂直叠加
+  - np.hstack 水平叠加
+- 调试
+  - array.shape 数组的size
+  - array.dtype 检查数组的数据类型
+  - type(stuff) 获取变量类型
+  - import pdb; pdb.ste_trace() 设置断点
+  - print
+
+
+
+#### Matplotlib
+
+- import matplotlib.pyplot as plt
+- 散点图
+  - plt.axis([Xmin,Xmax,Ymin,Ymax])
+  - plt.title('你的标题')
+  - plt.plot(x轴数据,y轴数据,'颜色形状')【如果是多张图就重复这个】
+    - plt.plot(x1,y1,'r.',x2,y2,'bv')
+    - 点线的颜色：g | green；b | blue；c | cyan 蓝绿色；m - 
+      magenta 品红色
+      • 点的形状：. | 点；v | 实心倒三角； ^ | 实心三角； o | 实心
+      圆；* | 实心五角星；+ | 加号 ； s | 实心方块
+      • 线的形状：- | 实线；-- | 虚线；-. 点划线
+- 设置格式
+- 存储
+  - plt.savefig("名称.格式")
+
+subplot绘制子图
+
+- plt.subplot(一共多少张图，本图在第几列，本图在第几行)
+
+
+#### Pandas
+
+##### 一维数据series
+
+索引：index 一个列表 （默认索引为0开始编号）
+
+- pd.Series(data,index=index)
+- data可以是字典、ndarry、标量
+
+相加，相乘等默认是按照<u>索引</u>匹配操作 
+
+向量化操作：+ *  
+
+##### 二维数据dataframe
+
+构造：用字典，一个key对应dataframe里的一列，index为所有value中index的并集
+
+​	rand
+
+ 变量名={'key1':pd.Series([1.,2.,3.],index=['index1,'index2,index3]),
+
+​				.....}
+
+选择：某行（按index，或按行序号），某列，表达式为真的某部分
+
+列：df["col1"]
+
+<img src="C:\Users\DELL\AppData\Roaming\Typora\typora-user-images\image-20210314094037361.png" alt="image-20210314094037361" style="zoom:50%;" />
+
+##### 操作csv
+
+pd.read_csv('文件名')
+
+##### 实例
+
+#### Seaborn绘图
+
+import seaborn as sns
+
+tips=sns.load_dataset("tips") 导入内置数据集
+
+- 直方图、分类直方图 displot,histplot
+- 概率密度图：kdeplot
+- 估计的累积密度图 ecdf
+- 散点图：relplot
+- 联合散点图 jointplot
+- pair correlation和散点图： pairplot
+- catplot:分类的“散点箱型图”，楔形图，箱型图
+- 回归分析：regplot/lmplot
+
+# 量化分析
+
+### 上节课复习
+
+行为金融
+
+- 买熟悉的票和听说的票
+
+多因子
+
+
+
+### 本节内容
+
+#### 趋势跟随
+
+- 发现趋势苗头-顺着趋势下注-遵循“截断止损，让利润奔跑”的哲学
+
+#### 策略要点
+
+- 市场：买卖什么
+
+- 头寸规模：买卖多少
+
+- 入市：什么时候买
+
+- 止损：什么时候卖出一个止损的头寸
+
+- 退出：什么时候退出一个盈利的头寸
+
+- 战术：怎么买卖？
+
+  ##### 市场
+
+  海龟交易实验：在海龟市场散步，打赌能不能把招募来的小白培养成交易员。只要流动性好（<u>成交量大，买卖价差小</u>）的市场都参与
+
+  ##### 头寸规模
+
+  k线：空心表示跌，实心表示涨
+
+  头寸规模计算：分子表示允许亏损的最大值
+
+<img src="C:\Users\DELL\AppData\Roaming\Typora\typora-user-images\image-20210312145737228.png" alt="image-20210312145737228" style="zoom:33%;" />
+
+​		市场间风险控制：限制有关联市场的合并头寸单位
+
+##### 		入市信号
+
+- 入市信号：x日突破-价格超过了过去x天的高点
+
+- 逐步建仓：在突破点建立1个单位头寸，价格每上涨n/2价格，逐步扩大头寸 ???
+
+  - “假突破”-涨了又跌，胜率不高。做对的时候要更多加仓，下注。
+
+  ##### 止损
+
+  价格变动的下限是2N，及时止损（有多笔加仓时，按最后一次加仓的价格）
+
+  ##### 退出
+
+  x日突破推出-价格低于前x日的平均值就退出
+
+#### 策略评价
+
